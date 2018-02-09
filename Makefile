@@ -6,7 +6,7 @@ SRCS= \
 	vars_server.py
 REQUIREMENTS=requirements.txt
 
-CONFIGDIR=../config
+CONFIGDIR=trips/src/config
 include $(CONFIGDIR)/python/prog.mk
 
 RESOURCES_PATH=$(etcdir)/$(MODULE)/resources
@@ -29,6 +29,11 @@ $(RESOURCES_PATH)/counter-fitted-vectors-gensim.txt: download_g.py $(VENV_SH)
 	$(MKINSTALLDIRS) $(RESOURCES_PATH)
 	. $(VENV_SH) ; \
 	python download_g.py 0B26sZWRA4lQmNXBTd1BXb05lYjA $@
+
+# this rule added for standalone git version
+install::
+	cd trips/src/KQML && make install
+	cd trips/src/TripsModule && make install
 
 install:: $(RESOURCES:%=$(RESOURCES_PATH)/%)
 	$(MKINSTALLDIRS) $(RESOURCES_PATH)/codes
