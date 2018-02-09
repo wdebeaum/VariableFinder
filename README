@@ -1,0 +1,53 @@
+This module is not in the startup file, when it;s finalized we can dad it there.
+This module given a phrase will detect the 'variable' and/or 'code' in the spreadsheets for World Modeler.
+
+You send a request like the following, we support two main commands: 'find-code'/'find-var'
+
+##Find code
+#command
+(REQUEST :CONTENT (find-code :phrase (wheat)))
+#answer
+#old: (reply :content (ANSWER (match :variable ((ICASA CRID)) :code ((DSSAT WH) (APSIM Wheat) (ICPCR WHD)) :score 1.0)))
+(reply :content (ANSWER (match :variable ((ICASA CRID)) :code ((DSSAT WH) (APSIM Wheat) (TRIPS WHT)) :score 1.0)))
+
+
+#command :top-n will set number of output return
+(REQUEST :CONTENT (find-code :phrase (drained awful) :top-n 1) )
+#answer
+#old: (reply :content (ANSWER (match :variable ((ICASA DRAINAGE)) :code ((ICASA PD)) :score 0.638720997826)))
+(reply :content (ANSWER (match :variable ((ICASA CRID)) :code ((ICASA BGR)) :score 0.283339563735)))
+
+
+##Find Variable
+#command
+(REQUEST :CONTENT (find-var :phrase (high of weather)))
+#answer
+#old: (reply :content (ANSWER (match :variable ((DSSAT TMAX) (ICASA tmax)) :score 0.774640750747)))
+(reply :content (ANSWER (match :variable ((DSSAT TMAX) (ICASA tmax) (TRIPS TMAX)) :score 0.774640750747)))
+
+
+As you can see, the reply message has a ANSWER part and in that a list 'match' that shows the variable and/or code
+depends on the command and in that part we have list of standards and values.
+
+
+Installation:
+This is handled by "make install" now. The rest of this section is retained for historical interest.
+
+---------------------
+
+Please execute the following command in the terminal and after that use make and make install in the folder.
+
+You can use --user at the end of commands for user only or sudo
+
+pip install gensim pandas python-levenshtein xlrd --user
+pip install -U nltk --user
+python -m nltk.downloader wordnet
+
+
+cd src/VariableFinder
+sudo sh download.sh
+#This will download some largish file in your /usr/local/share/ directory and it needs sudo. In case there was problem
+#with running the command with permission stuff, go ahead and give permission to the files.
+
+
+
