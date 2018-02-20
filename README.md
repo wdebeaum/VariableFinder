@@ -2,13 +2,21 @@
 
 VariableFinder is a TRIPS module that finds world modeling variables or the codes used to fill them given a sequence of words describing them.
 
-The main documentation is in the file [README](README).
+This file is the README for the standalone version of VariableFinder. The main documentation in the file [README](README) is written in the context of TRIPS. For the standalone version, `$TRIPS_BASE` is `trips/`.
 
 ## Build instructions ##
 
     ./configure [--with-python=/path/to/python] [--with-pip=/path/to/pip]
     make
     make install # installs to trips/etc/ and trips/bin/
+
+## Run instructions ##
+
+For standalone usage, you should give VariableFinder the `-connect no` option, t prevent it from trying to connect to the TRIPS Facilitator:
+
+    ./trips/bin/VariableFinder -connect no
+
+Then it will accept requests on its standard input stream, and give replies on its standard output stream (in addition to a few startup messages you can ignore). For the details of these requests and replies, see the file [README](README).
 
 ## Licensing ##
 
