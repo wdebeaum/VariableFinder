@@ -9,11 +9,13 @@ REQUIREMENTS=requirements.txt
 CONFIGDIR=trips/src/config
 include $(CONFIGDIR)/python/prog.mk
 
+EIDOS_ONTS=fao_variable topoflow un wdi
 RESOURCES_PATH=$(etcdir)/$(MODULE)/resources
 RESOURCES= \
 	counter-fitted-vectors-gensim.txt \
 	stopwords.txt \
 	dsatVars.xlsx \
+	$(EIDOS_ONTS:%=%_ontology.yml) \
 	codes/crop_codes.csv \
 	codes/management_codes.csv \
 	codes/metadata_codes.csv \
@@ -29,6 +31,9 @@ $(RESOURCES_PATH)/counter-fitted-vectors-gensim.txt: download_g.py $(VENV_SH)
 	$(MKINSTALLDIRS) $(RESOURCES_PATH)
 	. $(VENV_SH) ; \
 	python download_g.py 0B26sZWRA4lQmNXBTd1BXb05lYjA $@
+
+resources/%_ontology.yml:
+	cd resources ; curl -L -O "https://raw.githubusercontent.com/clulab/eidos/master/src/main/resources/org/clulab/wm/eidos/english/ontologies/$*_ontology.yml"
 
 # this rule added for standalone git version
 install::
